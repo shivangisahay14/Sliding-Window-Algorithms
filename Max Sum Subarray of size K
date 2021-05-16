@@ -1,0 +1,27 @@
+    int maximumSumSubarray(int K, vector<int> &Arr , int N){
+        
+        int i=0,j=0;
+        int sum=0;
+        int maxsum=INT_MIN;
+        
+        while(j<N){
+            
+            sum+=Arr[j];
+            
+            if(j-i+1<K){
+                j++;
+            }
+            
+            if(j-i+1<K){
+                maxsum=max(maxsum,sum);
+                            sum=sum-Arr[i];
+                i++; j++;
+                
+            }
+
+            
+        }
+        
+        return maxsum;
+        // code here 
+    }
