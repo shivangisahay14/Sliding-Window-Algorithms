@@ -1,0 +1,70 @@
+Brute force:
+void printFirstNegativeInteger(int arr[], int n, int k)
+{
+    // flag to check whether window contains
+    // a negative integer or not
+    bool flag;
+     
+    // Loop for each subarray(window) of size k
+    for (int i = 0; i<(n-k+1); i++)          
+    {
+        flag = false;
+ 
+        // traverse through the current window
+        for (int j = 0; j<k; j++)
+        {
+            // if a negative integer is found, then
+            // it is the first negative integer for
+            // current window. Print it, set the flag
+            // and break
+            if (arr[i+j] < 0)
+            {
+                cout << arr[i+j] << " ";
+                flag = true;
+                break;
+            }
+        }
+         
+        // if the current window does not
+        // contain a negative integer
+        if (!flag)
+            cout << "0" << " ";
+    }   
+}
+
+Sliding window Approach:
+vector<long long> printFirstNegativeInteger(long long int A[],
+                                             long long int N, long long int K) {
+                                                 
+        deque<long long int>d;
+        int i=0,j=0;
+        vector<long long>v;
+        
+        while(j<N){
+            
+            if(A[j]<0){
+                d.push_back(A[j]);
+            }
+            
+            if(j-i+1<K){
+                j++;
+            }
+            
+            else{
+                if(d.empty()){
+                    v.push_back(0);
+                }
+                else{
+                    v.push_back(d.front());
+                      if(d.front()==A[i]){
+                    d.pop_front();
+                }
+              
+                }
+                i++;j++;
+            }
+            
+        }
+        return v;                                               
+                                                 
+ }
