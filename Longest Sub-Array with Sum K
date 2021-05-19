@@ -1,0 +1,24 @@
+int lenOfLongSubarr(int A[],  int N, int K) 
+    { 
+        int sum=0,maxlen=0;
+        unordered_map<int,int>mp;
+        
+        for(int i=0;i<N;i++){
+            sum+=A[i];
+            
+            if(sum==K){
+                maxlen=i+1;
+            }
+            //make an entryfor 'sum' if it is not present in'mp'
+            if(mp.find(sum)==mp.end()){
+                mp[sum]=i;
+            }
+            //check if 'sum-k' is present in 'mp' or not
+            if(mp.find(sum-K)!=mp.end()){
+                maxlen=max(maxlen,i-mp[sum-K]);
+            }
+        }
+        
+        return maxlen;
+        // Complete the function
+    } 
