@@ -1,31 +1,38 @@
 Algo:
-int longestUniqueSubsttr(string S){
-        
-        int n=S.size();
-        unordered_map<char,int>mp;
+ int lengthOfLongestSubstring(string s) {
+        map<char,int>mp;
+        int mx=0;
         int i=0,j=0;
-        int ans=INT_MIN;
-        
-        while(j<n){
-            mp[S[j]-'a']++;
+        int n=s.length();
+        while(j<n)
+        {
+            mp[s[j]]++;  // Updating character in map
+            if(mp.size()==j-i+1)   // Here j-i+1 == window size
+            {
+                mx=max(mx,j-i+1);
+            }
+            else       //we will also have to check for the window right after updating the map in the else case.
+            {
+                while(mp.size()<j-i+1)
+                {
+                    mp[s[i]]--;
+                    if(mp[s[i]]==0)
+                    {
+                        mp.erase(s[i]);
+                    }
+                    i++; // Increasing the left side
+                    j-i+1-1; // Shrinking window size
+                    if(mp.size()==j-i+1)
+                    {
+                        mx=max(mx,j-i+1);  // Updating the window size
+                    }
+                }
             
-            if(mp.size()==j-i+1){
-                ans=max(ans,j-i+1);
             }
-            else{
-                if(mp[S[i]-'a']==1){
-                    mp.erase(S[i]-'a');
-                }
-                else{
-                    while(mp.size()<j-i+1){
-                    mp[S[i]-'a']--;
-                    i++;
-                }
-                }
-                j++;
-            }
+            j++;
         }
-        return ans;
+        return mx;
+    }
         
         Method 1 (Simple : O(n3)): We can consider all substrings one by one and check for each substring whether it contains all unique characters or not. 
         There will be n*(n+1)/2 substrings. Whether a substring contains all unique characters or not can be checked in linear time by scanning it from left to right and keeping a map of visited characters. 
